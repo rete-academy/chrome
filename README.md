@@ -3,6 +3,12 @@ rete-chrome
 
 Chrome Extension for Rete Academy
 
+## Getting start
+1. Generate first build to test
+Run `npm run build` to generate the build folder.
+2. Open setting/extensions in Google Chrome.
+Choose Load unpack files, browser to build folder and open.
+
 ## Available Scripts
 
 In the project directory, you can run:
