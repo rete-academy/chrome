@@ -7,6 +7,9 @@ Chrome Extension for Rete Academy
 
 In the project directory, you can run:
 
+### `npm run watch`
+For development, copy all needed files into build folder. Keep in mind that the result in build folder is not the same as production build.
+
 ### `npm start`
 
 Runs the app in the development mode.<br>
