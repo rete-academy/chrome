@@ -1,18 +1,26 @@
-import React from 'react';
-// import { Provider } from 'react-redux';
-import { HashRouter } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from '../routes';
+import Header from '../components/Header';
+import configureStore from '../store';
 // import Typography from '@material-ui/core/Typography';
 // import Button from '@material-ui/core/Button';
-import Login from './login';
-import Header from '../components/Header';
+const initialState = {
+    path: '/'
+}
 
-class Index extends React.Component {
+const reduxStore = configureStore(initialState);
+
+class Index extends Component {
     render() {
         return (
-            <HashRouter hashType="noslash">
-                <Header />
-                <Login />
-            </HashRouter>
+            <Provider store={reduxStore}>
+                <BrowserRouter>
+                    <Header />
+                    <Routes />
+                </BrowserRouter>
+            </Provider>
         );
     }
 }
