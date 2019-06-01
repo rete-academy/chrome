@@ -1,25 +1,29 @@
-import ACTION from './actions';
+import {
+    SET_PATH,
+    LOGIN,
+} from './types';
 
 const defaultState = {
-  path: ''
+    path: '/',
+    loggedIn: false,
+    user: null,
 };
 
-const pathReducer = (state = defaultState, action) => {
-    console.log('state is: ', state);
-    console.log('action is: ', action);
-
+export default (state = defaultState, action) => {
     switch (action.type) {
-        case ACTION.Types.SET_PATH: {
-            const newState = {
+        case SET_PATH: 
+            return {
                 ...state,
                 path: action.payload,
             };
-            return newState;
-        }
+        case LOGIN: 
+            return {
+                ...state,
+                loggedIn: action.payload.loggedIn,
+                user: action.payload.user,
+            };
 
         default:
             return state;
-  }
+    }
 };
-
-export default pathReducer;

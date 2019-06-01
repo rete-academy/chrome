@@ -1,14 +1,20 @@
 // types of action
-const Types = {
-  SET_PATH: 'SET_PATH',
-};
+import {
+    SET_AUTH,
+    SET_PATH,
+    // LOGIN,
+} from './types';
+
 // actions
-const setPath = path => ({
-  type: Types.SET_PATH,
+export const setPath = path => ({
+  type: SET_PATH,
   payload: path
 });
 
-export default {
-    setPath,
-    Types
-};
+export const setAuth = (loggedIn, user) => ({
+    type: SET_AUTH,
+    payload: {
+        loggedIn,
+        user,
+    }
+});

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,13 +12,13 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import ACTIONS from '../store/actions';
+import { setPath, setAuth } from '../store/actions';
 
 const styles = theme => ({
     main: {
         width: 'auto',
         display: 'block', // Fix IE 11 issue.
-        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px`,
+        padding: `${theme.spacing.unit * 2}px`,
         // marginLeft: theme.spacing.unit * 3,
         // marginRight: theme.spacing.unit * 3,
     },
@@ -43,26 +42,39 @@ const styles = theme => ({
     },
 });
 
-const PathsLink = props => <Link to="/paths" {...props} />
+// const PathsLink = props => <Link to="/paths" {...props} />
 
 const mapStateToProps = state => ({
-    path: state.path
+    path: state.path,
+    loggedIn: state.loggedIn,
+    user: state.user,
 });
 
 const mapDispatchToProps = dispatch => ({
-    setPath: path => dispatch(ACTIONS.setPath(path)),
+    setPath: path => dispatch(setPath(path)),
+    setAuth: (loggedIn, user) => dispatch(setAuth(loggedIn, user)),
 });
 
 class LogIn extends Component {
-    handleClick = event => {
+    handleLogin = event => {
         console.log('props is: ', this.props);
         console.log('event is: ', event);
-        this.props.setPath('/paths');
+    }
+
+    componentDidMount() {
+        axios.get('http://localhost:8000/api/paths')
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log('dcm error', error);
+            });
     }
 
     render() {
+      const { classes } = this.props
       return (
-        <main className="main">
+        <main className={classes.main}>
             <CssBaseline />
             <Avatar className="avatar">
                 <LockOutlinedIcon />
@@ -84,22 +96,15 @@ class LogIn extends Component {
                     autoComplete="current-password"
                 />
               </FormControl>
-              <FormControl margin="normal" required fullWidth>
-                  <FormControlLabel
-                      control={<Checkbox value="remember" color="primary" />}
-                      label="Remember me"
-                  />
-              </FormControl>
               <FormControl margin="dense">
                   <Button
                       variant="contained"
                       color="primary"
                       size="large"
                       className="submit"
-                      component={PathsLink} // why I can not simply use like this?
-                      onClick={this.handleClick}
+                      onClick={this.handleLogin}
                   >
-                      Log In
+                      Login
                   </Button>
               </FormControl>
             </form>
@@ -108,7 +113,6 @@ class LogIn extends Component {
     }
 }
 
-// export default withStyles(styles)(LogIn);
 export default connect(
     mapStateToProps,
     mapDispatchToProps
