@@ -5,8 +5,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -37,8 +37,10 @@ const styles = theme => ({
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing.unit,
     },
-    submit: {
-        // marginTop: theme.spacing.unit * 3,
+    buttons: {
+        marginTop: theme.spacing.unit * 4,
+        display: 'flex',
+        justifyContent: 'space-between',
     },
 });
 
@@ -56,12 +58,42 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class LogIn extends Component {
+    state = {
+        email: '',
+        password: '',
+    }
+
     handleLogin = event => {
-        console.log('props is: ', this.props);
-        console.log('event is: ', event);
+        console.log('login button event: ', event);
+    }
+
+    handleInputChange = (event) => {
+        this.setState({
+          [event.target.name]: event.target.value
+        });
+    }
+
+    handleSubmit = event => {
+        // console.log('props is: ', this.props);
+        axios.post('http://localhost:8000/oauth/token', {
+            username: this.state.email,
+            password: this.state.password,
+            grant_type: 'password',
+            client_id: 'Qpkk94pMCnsHCNCHJk7KqRwmsmPtqn8k',
+            client_secret: '2uVw5icCjbqw4zRKdgoe2o55gfl21kBzrbNAUW1ghIqtNylkazSdKHK2xxvQlRnm',
+        })
+            .then(response => {
+                console.log(response.data);
+                this.props.setAuth(true, response.data.user);
+            })
+            .catch(error => {
+                console.log('dcm error', error);
+            });
+        event.preventDefault();
     }
 
     componentDidMount() {
+        /*
         axios.get('http://localhost:8000/api/paths')
             .then(response => {
                 console.log(response.data);
@@ -69,6 +101,7 @@ class LogIn extends Component {
             .catch(error => {
                 console.log('dcm error', error);
             });
+        */
     }
 
     render() {
@@ -82,10 +115,16 @@ class LogIn extends Component {
             <Typography component="h1" variant="h6">
                 Log In
             </Typography>
-            <form className="form">
+            <form className="form" onSubmit={this.handleSubmit}>
               <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="email">Email Address</InputLabel>
-                  <Input id="email" name="email" autoComplete="email" autoFocus />
+                  <Input
+                      id="email"
+                      name="email"
+                      autoComplete="email"
+                      autoFocus
+                      onChange={this.handleInputChange}
+                  />
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="password">Password</InputLabel>
@@ -94,19 +133,28 @@ class LogIn extends Component {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    onChange={this.handleInputChange}
                 />
               </FormControl>
-              <FormControl margin="dense">
+              <div className={classes.buttons}>
                   <Button
                       variant="contained"
                       color="primary"
                       size="large"
                       className="submit"
-                      onClick={this.handleLogin}
+                      onClick={this.handleSubmit}
                   >
                       Login
                   </Button>
-              </FormControl>
+                  <Button
+                      color="secondary"
+                      size="large"
+                      className="forgot"
+                      onClick={this.handleLogin}
+                  >
+                      Forgot Password?
+                  </Button>
+              </div>
             </form>
         </main>
       );
