@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -38,7 +37,7 @@ const styles = theme => ({
         marginTop: theme.spacing.unit,
     },
     buttons: {
-        marginTop: theme.spacing.unit * 4,
+        marginTop: theme.spacing.unit * 2,
         display: 'flex',
         justifyContent: 'space-between',
     },
@@ -48,8 +47,8 @@ const styles = theme => ({
 
 const mapStateToProps = state => ({
     path: state.path,
-    loggedIn: state.loggedIn,
-    user: state.user,
+    loggedIn: false,
+    user: {},
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -93,6 +92,7 @@ class LogIn extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props);
         /*
         axios.get('http://localhost:8000/api/paths')
             .then(response => {
@@ -136,7 +136,7 @@ class LogIn extends Component {
                     onChange={this.handleInputChange}
                 />
               </FormControl>
-              <div className={classes.buttons}>
+              <FormControl margin="dense" fullWidth>
                   <Button
                       variant="contained"
                       color="primary"
@@ -146,14 +146,26 @@ class LogIn extends Component {
                   >
                       Login
                   </Button>
-                  <Button
-                      color="secondary"
-                      size="large"
-                      className="forgot"
-                      onClick={this.handleLogin}
+              </FormControl>
+              <div className={classes.buttons}>
+                  <Link
+                      component="button"
+                      variant="body2"
+                      onClick={() => {
+                        alert("I'm a button.");
+                      }}
                   >
                       Forgot Password?
-                  </Button>
+                  </Link>
+                  <Link
+                      component="button"
+                      variant="body2"
+                      onClick={() => {
+                        alert("I'm a button.");
+                      }}
+                  >
+                      Sign Up
+                  </Link>
               </div>
             </form>
         </main>

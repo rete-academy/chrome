@@ -3,13 +3,7 @@ import {
     LOGIN,
 } from './types';
 
-const defaultState = {
-    path: '/',
-    loggedIn: false,
-    user: null,
-};
-
-export default (state = defaultState, action) => {
+export default (state, action) => {
     switch (action.type) {
         case SET_PATH: 
             return {

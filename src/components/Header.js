@@ -1,6 +1,8 @@
 import React from 'react';
+import { MemoryRouter as Router } from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -28,52 +30,83 @@ const mapStateToProps = state => ({
     path: state.path
 });
 
+const PathLink = React.forwardRef((props, ref) => (
+  <Link innerRef={ref} to="/paths" {...props} />
+));
+
 class MenuAppBar extends React.Component {
-  state = {
-    auth: false,
-    anchorEl: null,
-  };
+    state = {
+        auth: false,
+        anchorElPages: null,
+        anchorElProfile: null,
+    };
 
   handleChange = event => {
     this.setState({ auth: event.target.checked });
   };
 
-  handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
+  handlePagesMenu = event => {
+    this.setState({ anchorElPages: event.currentTarget });
+  };
+
+  handleProfileMenu = event => {
+    this.setState({ anchorElPages: event.currentTarget });
   };
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
+      this.setState({ 
+          anchorElPages: null,
+          anchorElProfile: null,
+      });
   };
 
   render() {
     const { classes } = this.props;
-    const { auth, anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+    const { auth, anchorElPages, anchorElProfile } = this.state;
+      const pageOpen = Boolean(anchorElPages);
+      const profileOpen = Boolean(anchorElProfile);
 
     return (
       <div className={classes.root}>
         <AppBar position="static" color="secondary">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
+              <IconButton
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="Menu"
+                  onClick={this.handlePagesMenu}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorElPages}
+                keepMounted
+                open={Boolean(anchorElPages)}
+                onClose={this.handleClose}
+              >
+                    <Router>
+                        <MenuItem
+                            component={PathLink}
+                        >Browse Paths</MenuItem>
+                    </Router>
+              </Menu>
             <Typography variant="h6" color="inherit" className={classes.grow}>
                 Rete Academy
             </Typography>
             {auth && (
               <div>
                 <IconButton
-                  aria-owns={open ? 'menu-appbar' : undefined}
+                  aria-owns={profileOpen ? 'menu-appbar' : undefined}
                   aria-haspopup="true"
-                  onClick={this.handleMenu}
+                  onClick={this.handleProfileMenu}
                   color="inherit"
                 >
                   <AccountCircle />
                 </IconButton>
                 <Menu
                   id="menu-appbar"
-                  anchorEl={anchorEl}
+                  anchorEl={anchorElProfile}
                   anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
@@ -82,7 +115,7 @@ class MenuAppBar extends React.Component {
                     vertical: 'top',
                     horizontal: 'right',
                   }}
-                  open={open}
+                  open={profileOpen}
                   onClose={this.handleClose}
                 >
                   <MenuItem onClick={this.handleClose}>Profile</MenuItem>

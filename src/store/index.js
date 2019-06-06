@@ -4,7 +4,13 @@ import { createStore } from 'redux';
 // import logger from "redux-logger";
 import reducer from './reducer';
 
-export default function configureStore(initialState = { path: 'test' }) {
+const defaultState = {
+    path: '/',
+    loggedIn: false,
+    user: null,
+};
+
+export default function configureStore(initialState = defaultState) {
     // const store = createStore(reducer, initialState, applyMiddleware(logger));
     const store = createStore(reducer, initialState);
     return store;

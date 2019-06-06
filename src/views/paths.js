@@ -10,7 +10,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // import InputLabel from '@material-ui/core/InputLabel';
 // import Paper from '@material-ui/core/Paper';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
@@ -51,9 +50,7 @@ function Paths(props) {
         <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h6">
-            Paths
-        </Typography>
+        <h6>Paths</h6>
     </main>
   );
 }
