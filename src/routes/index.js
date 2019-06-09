@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import LogIn from '../views/login';
 import Paths from '../views/paths';
@@ -18,13 +18,11 @@ const styles = theme => ({
 class Routes extends Component {
     render() {
         return (
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path="/" component={LogIn} />
-                    <Route path="/paths" component={Paths} />
-                    <Route component={LogIn} />
-                </Switch>
-            </BrowserRouter>
+            <Switch>
+                <Route exact path="/" component={LogIn} />
+                <Route path="/paths" component={Paths} />
+                <Route component={LogIn} />
+            </Switch>
         )
     }
 }

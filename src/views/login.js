@@ -83,6 +83,7 @@ class LogIn extends Component {
         })
             .then(response => {
                 console.log(response.data);
+                this.props.history.push('/paths');
                 this.props.setAuth(true, response.data.user);
             })
             .catch(error => {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import Routes from '../routes';
 import Header from '../components/Header';
@@ -16,8 +17,10 @@ class Index extends Component {
         return (
             <MuiThemeProvider theme={reteTheme}>
                 <Provider store={reduxStore}>
-                    <Header />
-                    <Routes />
+                    <BrowserRouter>
+                        <Header />
+                        <Routes />
+                    </BrowserRouter>
                 </Provider>
             </MuiThemeProvider>
         );
