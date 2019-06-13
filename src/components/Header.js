@@ -1,8 +1,7 @@
 import React from 'react';
-// import { BrowserRouter as Router } from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import {
     AppBar,
@@ -16,7 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const AdapterLink = React.forwardRef((props, ref) => {
-    console.log('run it mother fucker', {...props});
+    // console.log('run it mother fucker', {...props});
     return <Link innerRef={ref} {...props} />;
 });
 
