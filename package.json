@@ -5,7 +5,7 @@
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-scripts": "5.0.1"
   },
   "watch": {
     "build": {
@@ -39,6 +39,6 @@
     ]
   },
   "devDependencies": {
-    "cra-build-watch": "^1.4.1"
+    "cra-build-watch": "^3.4.0"
   }
 }
